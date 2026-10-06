@@ -1,3 +1,18 @@
 from django.db import models
 
-# Create your models here.
+
+class Customer(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product} for {self.customer.name}"
